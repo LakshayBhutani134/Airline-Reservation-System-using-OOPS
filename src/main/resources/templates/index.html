@@ -1,0 +1,89 @@
+templates\index.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airline Reservation System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .user-info {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #f44336;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Airline Reservation System</h1>
+    
+    <div sec:authorize="!isAuthenticated()">
+        <p>Please <a href="/login">login</a> or <a href="/signup">sign up</a> to access the system.</p>
+    </div>
+    
+    <div sec:authorize="isAuthenticated()" class="user-info">
+        <span>Welcome, <span sec:authentication="name"></span>!</span>
+        <form action="/logout" method="post" style="display: inline;">
+            
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+    
+    <div sec:authorize="hasRole('USER')">
+        <div class="section">
+            <h2>Flight Management</h2>
+            <ul>
+                <li><a href="/showAllFlights">View All Flights</a></li>
+                <li><a href="/showParticularFlightDetails">View Flight Details</a></li>
+            </ul>
+        </div>
+        
+        <div class="section">
+            <h2>Passenger Management</h2>
+            <ul>
+                <li><a href="/createPassenger">Add New Passenger</a></li>
+                <li><a href="/getPassengerDetails">View Passenger Details</a></li>
+                <li><a href="/updatePassenger">Update Passenger</a></li>
+                <li><a href="/deletePassenger">Delete Passenger</a></li>
+            </ul>
+        </div>
+        
+        <div class="section">
+            <h2>Reservation Management</h2>
+            <ul>
+                <li><a href="/createReservation">Create Reservation</a></li>
+                <li><a href="/getReservation">View Reservation</a></li>
+                <li><a href="/updateReservation">Update Reservation</a></li>
+                <li><a href="/cancelReservation">Cancel Reservation</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div sec:authorize="hasRole('ADMIN')">
+        <div class="section">
+            <h2>Admin Functionality</h2>
+            <ul>
+                <li><a href="/addUpdateFlights">Add/Update Flights</a></li>
+                <li><a href="/deleteFlight">Delete Flights</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

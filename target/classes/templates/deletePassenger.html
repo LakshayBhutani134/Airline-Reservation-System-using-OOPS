@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Passenger</title>
+</head>
+<body>
+    <h2>Delete Passenger</h2>
+    <form id="deleteForm">
+        <label for="passengerId">Passenger ID:</label><br>
+        <input type="text" id="passengerId" name="passengerId" required><br>
+        
+        <label for="xml">XML Data (optional):</label><br>
+        <input type="text" id="xml" name="xml"><br>
+        
+        <input type="submit" value="Delete Passenger">
+    </form>
+
+    <div id="response"></div>
+
+    <script>
+        document.getElementById("deleteForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            var passengerId = document.getElementById("passengerId").value;
+            var xmlData = document.getElementById("xml").value;
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open("DELETE", "/passenger/" + passengerId + "?xml=" + xmlData, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    var responseDiv = document.getElementById("response");
+                    if (xhr.status === 200) {
+                        responseDiv.innerHTML = "<p>Passenger with ID " + passengerId + " has been deleted successfully.</p>";
+                    } else {
+                        responseDiv.innerHTML = "<p>Error: " + xhr.responseText + "</p>";
+                    }
+                }
+            };
+            xhr.send();
+        });
+    </script>
+</body>
+</html>

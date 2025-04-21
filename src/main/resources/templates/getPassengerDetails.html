@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passenger Details</title>
+</head>
+<body>
+    <h1>Passenger Details</h1>
+    <form id="passengerForm">
+        <label for="id">Enter Passenger ID:</label>
+        <input type="text" id="id" name="id" required>
+        <br>
+        <label for="xml">Include XML Format (Optional):</label>
+        <input type="checkbox" id="xml" name="xml" value="true">
+        <br>
+        <button type="button" onclick="getPassengerDetails()">Get Passenger Details</button>
+    </form>
+
+    <div id="passengerDetailsContainer"></div>
+
+    <script>
+        function getPassengerDetails() {
+            var id = document.getElementById("id").value;
+            var xml = document.getElementById("xml").checked ? "true" : "";
+
+            // Construct the URL for the API endpoint
+            var apiUrl = "/passenger/" + id + "?xml=" + xml;
+
+            // Fetch data from the server
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Display the retrieved data
+                    displayPassengerDetails(data);
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function displayPassengerDetails(data) {
+            var detailsContainer = document.getElementById("passengerDetailsContainer");
+            detailsContainer.innerHTML = `
+                <h2>Passenger Details</h2>
+                <p>ID: ${data.id}</p>
+                <p>Name: ${data.firstname} ${data.lastName}</p>
+                <p>Age: ${data.age}</p>
+                <p>Gender: ${data.gender}</p>
+                <p>Phone: ${data.phone}</p>
+                <p>Reservations: ${data.reservations.length}</p>
+            `;
+        }
+    </script>
+</body>
+</html>

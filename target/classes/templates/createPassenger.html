@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Passenger</title>
+</head>
+<body>
+    <h2>Create Passenger</h2>
+    <form action="/passenger" method="post">
+        <label for="firstname">First Name:</label><br>
+        <input type="text" id="firstname" name="firstname" required><br>
+        
+        <label for="lastname">Last Name:</label><br>
+        <input type="text" id="lastname" name="lastname" required><br>
+        
+        <label for="age">Age:</label><br>
+        <input type="text" id="age" name="age" required><br>
+        
+        <label for="gender">Gender:</label><br>
+        <select id="gender" name="gender" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select><br>
+        
+        <label for="phone">Phone:</label><br>
+        <input type="text" id="phone" name="phone" required><br>
+        
+        <label for="xml">XML Data (optional):</label><br>
+        <input type="text" id="xml" name="xml"><br>
+        
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
